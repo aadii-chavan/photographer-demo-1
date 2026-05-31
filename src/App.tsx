@@ -40,7 +40,7 @@ const ContactModalButton = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 40, scale: 0.98 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-[95vw] max-w-5xl h-[85vh] max-h-[800px] bg-[#0C0C0C] border border-[#D7E2EA]/20 shadow-2xl rounded-[40px] sm:rounded-[50px] overflow-hidden z-10 flex flex-col md:flex-row"
+              className="relative w-[95vw] max-w-5xl h-[85vh] max-h-[800px] bg-[#0C0C0C] border border-[#D7E2EA]/20 shadow-2xl rounded-[30px] sm:rounded-[50px] overflow-y-auto md:overflow-hidden z-10 flex flex-col md:flex-row"
             >
               {/* Left: Cinematic Image */}
               <div className="hidden md:block w-1/2 h-full relative overflow-hidden bg-[#0C0C0C]">
@@ -61,14 +61,14 @@ const ContactModalButton = () => {
               </div>
 
               {/* Right: Contact Info */}
-              <div className="w-full md:w-1/2 h-full flex flex-col justify-between p-8 sm:p-12 md:p-16 relative bg-[#0C0C0C]">
-                <button onClick={() => setIsOpen(false)} className="absolute top-8 right-8 text-[#D7E2EA]/40 hover:text-white transition-colors duration-300 z-20">
+              <div className="w-full md:w-1/2 h-max md:h-full flex flex-col justify-between p-6 sm:p-12 md:p-16 relative bg-[#0C0C0C]">
+                <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 md:top-8 md:right-8 text-[#D7E2EA]/40 hover:text-white transition-colors duration-300 z-20">
                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
 
-                <div className="flex flex-col gap-2 mt-8 md:mt-0">
+                <div className="flex flex-col gap-2 mt-12 md:mt-0">
                   <span className="text-[#D7E2EA]/40 uppercase tracking-[0.3em] text-xs sm:text-sm font-medium">Say Hello</span>
-                  <h3 className="hero-heading font-black uppercase tracking-tight text-6xl sm:text-7xl md:text-[5rem] leading-none mb-8">
+                  <h3 className="hero-heading font-black uppercase tracking-tight text-5xl sm:text-7xl md:text-[5rem] leading-none mb-6 md:mb-8">
                     Let's <br/> Talk.
                   </h3>
                 </div>
@@ -111,7 +111,7 @@ const ContactModalButton = () => {
 };
 
 const LiveProjectButton = () => (
-  <button className="rounded-full px-8 py-3 sm:px-10 sm:py-3.5 text-sm sm:text-base border-2 border-[#D7E2EA] text-[#D7E2EA] font-medium uppercase tracking-widest hover:bg-[#D7E2EA]/10 transition-colors">
+  <button className="rounded-full px-5 py-2.5 sm:px-10 sm:py-3.5 text-xs sm:text-base border-2 border-[#D7E2EA] text-[#D7E2EA] font-medium uppercase tracking-widest hover:bg-[#D7E2EA]/10 transition-colors shrink-0">
     View Gallery
   </button>
 );
@@ -176,8 +176,8 @@ const HeroSection = () => {
       </motion.div>
 
       <FadeIn delay={0} y={-20} className="w-full z-10">
-        <nav className="w-full flex justify-between items-center px-6 md:px-10 pt-6 md:pt-8 text-[#D7E2EA] font-medium uppercase tracking-wider text-xs sm:text-sm md:text-base">
-          <div className="flex gap-4 sm:gap-8">
+        <nav className="w-full flex justify-between items-center px-4 md:px-10 pt-6 md:pt-8 text-[#D7E2EA] font-medium uppercase tracking-wider text-[10px] sm:text-xs md:text-sm">
+          <div className="flex gap-3 sm:gap-8">
             {["About", "Services"].map((link) => (
               <a key={link} href={`#${link.toLowerCase()}`} className="hover:opacity-70 transition-opacity duration-200">
                 {link}
@@ -189,7 +189,7 @@ const HeroSection = () => {
             EST. 2014 &nbsp; | &nbsp; PUNE, MH
           </div>
 
-          <div className="flex gap-4 sm:gap-8">
+          <div className="flex gap-3 sm:gap-8">
             {["Journey", "Portfolio"].map((link) => (
               <a key={link} href={`#${link.toLowerCase()}`} className="hover:opacity-70 transition-opacity duration-200">
                 {link}
@@ -201,8 +201,8 @@ const HeroSection = () => {
 
       <div className="flex-1 flex flex-col justify-center items-center overflow-hidden z-10 w-full px-4">
         <FadeIn delay={0.15} y={40} duration={0.9} className="flex flex-col items-center">
-          <span className="text-[#D7E2EA] uppercase tracking-[0.4em] text-xs sm:text-sm md:text-base mb-4 sm:mb-6 opacity-80">Premium Photography</span>
-          <h1 className="hero-heading font-black uppercase tracking-tight leading-none text-center text-[13vw] sm:text-[14vw] md:text-[12vw] lg:text-[10vw]">
+          <span className="text-[#D7E2EA] uppercase tracking-[0.4em] text-[10px] sm:text-sm md:text-base mb-4 sm:mb-6 opacity-80">Premium Photography</span>
+          <h1 className="hero-heading font-black uppercase tracking-tight leading-none text-center text-[15vw] sm:text-[14vw] md:text-[12vw] lg:text-[10vw]">
             Studio Darpan
           </h1>
         </FadeIn>
@@ -310,8 +310,8 @@ const ServicesSection = () => {
 
       <div className="max-w-5xl mx-auto flex flex-col">
         {services.map((srv, i) => (
-          <FadeIn key={srv.num} delay={i * 0.1} y={30} className="border-t border-[rgba(12,12,12,0.15)] last:border-b py-8 sm:py-10 md:py-12 flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-10 md:gap-16">
-            <span className="text-[#0C0C0C] font-black text-[clamp(3rem,10vw,140px)] leading-none shrink-0 w-[15%]">
+          <FadeIn key={srv.num} delay={i * 0.1} y={30} className="border-t border-[rgba(12,12,12,0.15)] last:border-b py-8 sm:py-10 md:py-12 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-16">
+            <span className="text-[#0C0C0C] font-black text-[clamp(3rem,10vw,140px)] leading-none shrink-0 w-auto md:w-[15%]">
               {srv.num}
             </span>
             <div className="flex flex-col gap-2 sm:gap-4 flex-1">
@@ -382,7 +382,7 @@ const JourneySection = () => {
               <div key={step.num} className={`flex flex-col md:flex-row items-center gap-10 md:gap-20 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} relative`}>
                 
                 {/* Text Content */}
-                <div className={`w-full md:w-1/2 flex flex-col gap-6 ${isEven ? 'md:text-right md:items-end' : 'md:text-left md:items-start'} relative z-10 pl-12 md:pl-0`}>
+                <div className={`w-full md:w-1/2 flex flex-col gap-4 md:gap-6 ${isEven ? 'md:text-right md:items-end' : 'md:text-left md:items-start'} relative z-10 pl-0 md:pl-0`}>
                   <FadeIn delay={0.1} y={30}>
                     <span className="text-[#D7E2EA]/30 font-black text-6xl sm:text-8xl tracking-tighter leading-none mb-2 block">
                       {step.num}
@@ -444,18 +444,18 @@ const ProjectCard = ({ proj, index, totalCards }: any) => {
           filter,
           top: `calc(5vh + ${index * 30}px)` 
         }}
-        className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 shadow-2xl rounded-[40px] sm:rounded-[50px] md:rounded-[60px] p-4 sm:p-6 md:p-8 flex flex-col gap-6 md:gap-8 origin-top h-[90vh] relative"
+        className="w-full bg-[#0C0C0C] border border-[#D7E2EA]/20 shadow-2xl rounded-[32px] sm:rounded-[50px] md:rounded-[60px] p-5 sm:p-6 md:p-8 flex flex-col gap-5 md:gap-8 origin-top h-[85vh] sm:h-[90vh] relative"
       >
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 w-full shrink-0">
-          <div className="flex items-center gap-6 sm:gap-10">
-            <span className="text-[#D7E2EA] font-black text-[clamp(3rem,8vw,100px)] leading-none">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 w-full shrink-0">
+          <div className="flex items-center gap-4 sm:gap-10">
+            <span className="text-[#D7E2EA] font-black text-[clamp(2.5rem,8vw,100px)] leading-none">
               {proj.num}
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-[#D7E2EA]/60 uppercase tracking-widest text-xs sm:text-sm">
+              <span className="text-[#D7E2EA]/60 uppercase tracking-widest text-[10px] sm:text-sm">
                 {proj.category}
               </span>
-              <h3 className="text-[#D7E2EA] font-medium uppercase text-xl sm:text-2xl md:text-3xl">
+              <h3 className="text-[#D7E2EA] font-medium uppercase text-lg sm:text-2xl md:text-3xl">
                 {proj.name}
               </h3>
             </div>
@@ -463,13 +463,13 @@ const ProjectCard = ({ proj, index, totalCards }: any) => {
           <LiveProjectButton />
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 h-full overflow-hidden pb-2">
-          <div className="w-full sm:w-[40%] flex flex-col gap-4">
-            <img src={proj.images[0]} alt="" className="w-full h-[clamp(130px,16vw,230px)] object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]" />
-            <img src={proj.images[1]} alt="" className="w-full flex-1 object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]" />
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4 h-full overflow-hidden pb-1 md:pb-2">
+          <div className="w-full md:w-[40%] flex flex-row md:flex-col gap-3 md:gap-4 h-[30%] min-h-[100px] sm:min-h-[140px] md:h-auto md:min-h-0">
+            <img src={proj.images[0]} alt="" className="w-1/2 md:w-full h-full md:h-[clamp(130px,16vw,230px)] object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
+            <img src={proj.images[1]} alt="" className="w-1/2 md:w-full h-full md:flex-1 object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
           </div>
-          <div className="w-full sm:w-[60%] h-full min-h-[300px] sm:min-h-0">
-            <img src={proj.images[2]} alt="" className="w-full h-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]" />
+          <div className="w-full md:w-[60%] flex-1 md:h-full min-h-[200px] md:min-h-0">
+            <img src={proj.images[2]} alt="" className="w-full h-full object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
           </div>
         </div>
       </motion.div>
