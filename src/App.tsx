@@ -4,7 +4,10 @@ import { motion, useScroll, useTransform, useVelocity, useSpring, AnimatePresenc
 import { Instagram, Facebook, Mail, MapPin, Phone } from 'lucide-react';
 import heroVideoDesktop from '../assets/v1.mp4';
 import heroVideoMobile from '../assets/v2.mp4';
-
+import journeyImg1 from '../assets/01.jpg';
+import journeyImg2 from '../assets/02.jpg';
+import journeyImg3 from '../assets/03.jpg';
+import journeyImg4 from '../assets/04.jpg';
 const ContactModalButton = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -256,21 +259,21 @@ const MarqueeSection = () => {
   const row2Images = [...allImages.slice(half), ...allImages.slice(half), ...allImages.slice(half), ...allImages.slice(half)];
 
   return (
-    <section className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden flex flex-col gap-3 relative z-20">
+    <section className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden flex flex-col gap-2 sm:gap-3 relative z-20">
       <motion.div 
-        className="flex gap-3 w-max will-change-transform"
+        className="flex gap-2 sm:gap-3 w-max will-change-transform"
         style={{ x: move1, skewX }}
       >
         {row1Images.map((src, i) => (
-          <img key={`r1-${i}`} src={src} className="w-[420px] h-[270px] rounded-2xl object-cover shrink-0" loading="lazy" alt="" />
+          <img key={`r1-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" loading="lazy" alt="" />
         ))}
       </motion.div>
       <motion.div 
-        className="flex gap-3 w-max will-change-transform"
+        className="flex gap-2 sm:gap-3 w-max will-change-transform"
         style={{ x: move2, skewX }}
       >
         {row2Images.map((src, i) => (
-          <img key={`r2-${i}`} src={src} className="w-[420px] h-[270px] rounded-2xl object-cover shrink-0" loading="lazy" alt="" />
+          <img key={`r2-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" loading="lazy" alt="" />
         ))}
       </motion.div>
     </section>
@@ -344,25 +347,25 @@ const JourneySection = () => {
       num: "01",
       title: "The Connection",
       desc: "Before we ever pick up a camera, we sit down with you. We want to know how you met, the quirks of your families, and what matters most. We don't just photograph clients; we build a connection so on your big day, we feel like old friends.",
-      img: "https://image.pollinations.ai/prompt/two_cups_of_coffee_on_table_with_wedding_planner_book_cinematic_moody_photography?width=800&height=600&nologo=true"
+      img: journeyImg1
     },
     {
       num: "02",
       title: "The Anticipation",
       desc: "A day away from the wedding chaos to just be yourselves. Whether it's the breezy hills of Lonavala or the historic streets of Pune, we capture the raw, unfiltered chemistry and the quiet moments of anticipation.",
-      img: "https://image.pollinations.ai/prompt/romantic_indian_couple_holding_hands_walking_in_nature_sunset_silhouette_photography?width=800&height=600&nologo=true"
+      img: journeyImg2
     },
     {
       num: "03",
       title: "The Celebration",
       desc: "From the playful chaos of the Haldi to the deeply spiritual tear at the Kanyadaan. We blend into the background, letting the authentic emotions unfold naturally—capturing both the grand scale and the intimate, fleeting glances.",
-      img: "https://image.pollinations.ai/prompt/candid_emotional_moment_indian_wedding_parents_crying_beautiful_cinematic_photography?width=800&height=600&nologo=true"
+      img: journeyImg3
     },
     {
       num: "04",
       title: "The Legacy",
       desc: "Long after the flowers have faded, your memories remain. We handcraft premium albums that act as a time machine, allowing you and your future generations to relive the magic exactly as it felt in that exact moment.",
-      img: "https://image.pollinations.ai/prompt/hands_opening_a_premium_leather_wedding_photo_album_warm_cinematic_lighting?width=800&height=600&nologo=true"
+      img: journeyImg4
     }
   ];
 
