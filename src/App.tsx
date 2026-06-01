@@ -2,12 +2,6 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useScroll, useTransform, useVelocity, useSpring, AnimatePresence } from 'framer-motion';
 import { Instagram, Facebook, Mail, MapPin, Phone } from 'lucide-react';
-import heroVideoDesktop from '../assets/v1.mp4';
-import heroVideoMobile from '../assets/v2.mp4';
-import journeyImg1 from '../assets/01.jpg';
-import journeyImg2 from '../assets/02.jpg';
-import journeyImg3 from '../assets/03.jpg';
-import journeyImg4 from '../assets/04.jpg';
 const ContactModalButton = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -55,6 +49,8 @@ const ContactModalButton = () => {
                   transition={{ duration: 1.5, ease: "easeOut" }}
                   src="https://image.pollinations.ai/prompt/cinematic_indian_bride_getting_ready_dark_moody_photography?width=800&height=1000&nologo=true" 
                   className="w-full h-full object-cover opacity-80"
+                  loading="lazy"
+                  decoding="async"
                   alt="Studio Darpan Let's Talk"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0C] via-[#0C0C0C]/20 to-transparent" />
@@ -173,7 +169,7 @@ const HeroSection = () => {
         className="absolute inset-0 z-[-1]"
       >
         <video 
-          src={heroVideoDesktop}
+          src="/v1.mp4"
           autoPlay 
           loop 
           muted 
@@ -181,7 +177,7 @@ const HeroSection = () => {
           className="w-full h-full object-cover hidden sm:block"
         />
         <video 
-          src={heroVideoMobile}
+          src="/v2.mp4"
           autoPlay 
           loop 
           muted 
@@ -251,12 +247,12 @@ const MarqueeSection = () => {
   // You can adjust the number '21' to match the actual number of images you have.
   // Adjusted to 10 images (5 in each row) for better performance.
   const totalImages = 10;
-  const allImages = Array.from({ length: totalImages }, (_, i) => `/h${i + 1}.jpg`);
+  const allImages = Array.from({ length: totalImages }, (_, i) => `/h${i + 1}.webp`);
 
   const half = Math.ceil(allImages.length / 2);
-  // Duplicate 4 times to ensure smooth looping across wide screens
-  const row1Images = [...allImages.slice(0, half), ...allImages.slice(0, half), ...allImages.slice(0, half), ...allImages.slice(0, half)];
-  const row2Images = [...allImages.slice(half), ...allImages.slice(half), ...allImages.slice(half), ...allImages.slice(half)];
+  // Duplicate 3 times to ensure smooth looping across wide screens while improving performance
+  const row1Images = [...allImages.slice(0, half), ...allImages.slice(0, half), ...allImages.slice(0, half)];
+  const row2Images = [...allImages.slice(half), ...allImages.slice(half), ...allImages.slice(half)];
 
   return (
     <section className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden flex flex-col gap-2 sm:gap-3 relative z-20">
@@ -265,7 +261,7 @@ const MarqueeSection = () => {
         style={{ x: move1, skewX }}
       >
         {row1Images.map((src, i) => (
-          <img key={`r1-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" loading="lazy" alt="" />
+          <img key={`r1-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" loading="lazy" decoding="async" alt="" />
         ))}
       </motion.div>
       <motion.div 
@@ -273,7 +269,7 @@ const MarqueeSection = () => {
         style={{ x: move2, skewX }}
       >
         {row2Images.map((src, i) => (
-          <img key={`r2-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" loading="lazy" alt="" />
+          <img key={`r2-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" loading="lazy" decoding="async" alt="" />
         ))}
       </motion.div>
     </section>
@@ -347,25 +343,25 @@ const JourneySection = () => {
       num: "01",
       title: "The Connection",
       desc: "Before we ever pick up a camera, we sit down with you. We want to know how you met, the quirks of your families, and what matters most. We don't just photograph clients; we build a connection so on your big day, we feel like old friends.",
-      img: journeyImg1
+      img: "/01.webp"
     },
     {
       num: "02",
       title: "The Anticipation",
       desc: "A day away from the wedding chaos to just be yourselves. Whether it's the breezy hills of Lonavala or the historic streets of Pune, we capture the raw, unfiltered chemistry and the quiet moments of anticipation.",
-      img: journeyImg2
+      img: "/02.webp"
     },
     {
       num: "03",
       title: "The Celebration",
       desc: "From the playful chaos of the Haldi to the deeply spiritual tear at the Kanyadaan. We blend into the background, letting the authentic emotions unfold naturally—capturing both the grand scale and the intimate, fleeting glances.",
-      img: journeyImg3
+      img: "/03.webp"
     },
     {
       num: "04",
       title: "The Legacy",
       desc: "Long after the flowers have faded, your memories remain. We handcraft premium albums that act as a time machine, allowing you and your future generations to relive the magic exactly as it felt in that exact moment.",
-      img: journeyImg4
+      img: "/04.webp"
     }
   ];
 
@@ -421,6 +417,8 @@ const JourneySection = () => {
                       <img 
                         src={step.img} 
                         alt={step.title} 
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-[300px] sm:h-[400px] object-cover transition-transform duration-1000 group-hover:scale-105"
                       />
                     </div>
@@ -477,11 +475,11 @@ const ProjectCard = ({ proj, index, totalCards }: any) => {
 
         <div className="flex flex-col md:flex-row gap-3 md:gap-4 h-full overflow-hidden pb-1 md:pb-2">
           <div className="w-full md:w-[40%] flex flex-row md:flex-col gap-3 md:gap-4 h-[30%] min-h-[100px] sm:min-h-[140px] md:h-auto md:min-h-0">
-            <img src={proj.images[0]} alt="" className="w-1/2 md:w-full h-full md:h-[clamp(130px,16vw,230px)] object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
-            <img src={proj.images[1]} alt="" className="w-1/2 md:w-full h-full md:flex-1 object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
+            <img src={proj.images[0]} alt="" loading="lazy" decoding="async" className="w-1/2 md:w-full h-full md:h-[clamp(130px,16vw,230px)] object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
+            <img src={proj.images[1]} alt="" loading="lazy" decoding="async" className="w-1/2 md:w-full h-full md:flex-1 object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
           </div>
           <div className="w-full md:w-[60%] flex-1 md:h-full min-h-[200px] md:min-h-0">
-            <img src={proj.images[2]} alt="" className="w-full h-full object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
+            <img src={proj.images[2]} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
           </div>
         </div>
       </motion.div>
@@ -496,9 +494,9 @@ const ProjectsSection = () => {
       category: "Wedding",
       name: "Weddings & Ceremonies",
       images: [
-        "/p1.jpg",
-        "/p2.jpg",
-        "/p3.jpg"
+        "/p1.webp",
+        "/p2.webp",
+        "/p3.webp"
       ]
     },
     {
@@ -506,9 +504,9 @@ const ProjectsSection = () => {
       category: "Pre-Wedding",
       name: "Couples & Pre-Weddings",
       images: [
-        "/s1.jpg",
-        "/s2.jpg",
-        "/s3.jpg"
+        "/s1.webp",
+        "/s2.webp",
+        "/s3.webp"
       ]
     },
     {
@@ -516,9 +514,9 @@ const ProjectsSection = () => {
       category: "Editorial",
       name: "Editorial & Fashion",
       images: [
-        "/e1.jpg",
-        "/e2.jpg",
-        "/e3.jpg"
+        "/e1.webp",
+        "/e2.webp",
+        "/e3.webp"
       ]
     }
   ];
