@@ -1,7 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useScroll, useTransform, useVelocity, useSpring, AnimatePresence } from 'framer-motion';
-import { Aperture, Instagram, Facebook, Mail, MapPin, Phone } from 'lucide-react';
+import { Instagram, Facebook, Mail, MapPin, Phone } from 'lucide-react';
+import heroVideoDesktop from '../assets/v1.mp4';
+import heroVideoMobile from '../assets/v2.mp4';
 
 const ContactModalButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -163,14 +165,25 @@ const HeroSection = () => {
       {/* Cinematic Background */}
       <motion.div 
         initial={{ scale: 1.1, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.4 }}
+        animate={{ scale: 1, opacity: 0.7 }}
         transition={{ duration: 2, ease: "easeOut" }}
         className="absolute inset-0 z-[-1]"
       >
-        <img 
-          src="https://image.pollinations.ai/prompt/cinematic_maharashtrian_wedding_couple_sunset_silhouette_ultra_high_quality_photography?width=1920&height=1080&nologo=true" 
-          alt="Studio Darpan Background" 
-          className="w-full h-full object-cover"
+        <video 
+          src={heroVideoDesktop}
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-full h-full object-cover hidden sm:block"
+        />
+        <video 
+          src={heroVideoMobile}
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-full h-full object-cover block sm:hidden"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0C0C0C]/90 via-[#0C0C0C]/30 to-[#0C0C0C] pointer-events-none" />
       </motion.div>
@@ -231,25 +244,21 @@ const MarqueeSection = () => {
   const move1 = useTransform(scrollY, v => -v * 0.4);
   const move2 = useTransform(scrollY, v => v * 0.4 - 1000);
 
-  // Generate 21 photography placeholder images using AI prompts for exact Indian context
-  const marqueePrompts = [
-    "maharashtrian_wedding_couple_traditional", "indian_bridal_jewelry_close_up", "colorful_indian_wedding_decorations",
-    "traditional_saree_fashion_shoot", "pune_city_landscape_sunset", "haldi_ceremony_yellow_colors",
-    "kanyadaan_ritual_indian_wedding", "indian_groom_in_sherwani", "beautiful_indian_bride_portrait",
-    "diwali_festival_lights_celebration", "indian_wedding_mandap_flowers", "pre_wedding_shoot_nature_couple",
-    "maharashtrian_nauvari_saree_portrait", "indian_wedding_food_feast", "mehendi_henna_hands_close_up",
-    "indian_wedding_baraat_dancing", "traditional_indian_music_instruments", "mumbai_city_skyline_night",
-    "indian_wedding_fire_pheras", "candid_indian_wedding_smile", "elegant_indian_reception_stage"
-  ];
-  const allImages = marqueePrompts.map(prompt => `https://image.pollinations.ai/prompt/${prompt}_photography_high_quality?width=420&height=270&nologo=true`);
+  // Assuming you have 21 images named h1.jpg, h2.jpg ... h21.jpg in your public folder.
+  // You can adjust the number '21' to match the actual number of images you have.
+  // Adjusted to 10 images (5 in each row) for better performance.
+  const totalImages = 10;
+  const allImages = Array.from({ length: totalImages }, (_, i) => `/h${i + 1}.jpg`);
 
-  const row1Images = [...allImages.slice(0, 11), ...allImages.slice(0, 11), ...allImages.slice(0, 11)];
-  const row2Images = [...allImages.slice(11), ...allImages.slice(11), ...allImages.slice(11)];
+  const half = Math.ceil(allImages.length / 2);
+  // Duplicate 4 times to ensure smooth looping across wide screens
+  const row1Images = [...allImages.slice(0, half), ...allImages.slice(0, half), ...allImages.slice(0, half), ...allImages.slice(0, half)];
+  const row2Images = [...allImages.slice(half), ...allImages.slice(half), ...allImages.slice(half), ...allImages.slice(half)];
 
   return (
     <section className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden flex flex-col gap-3 relative z-20">
       <motion.div 
-        className="flex gap-3 w-max"
+        className="flex gap-3 w-max will-change-transform"
         style={{ x: move1, skewX }}
       >
         {row1Images.map((src, i) => (
@@ -257,7 +266,7 @@ const MarqueeSection = () => {
         ))}
       </motion.div>
       <motion.div 
-        className="flex gap-3 w-max"
+        className="flex gap-3 w-max will-change-transform"
         style={{ x: move2, skewX }}
       >
         {row2Images.map((src, i) => (
