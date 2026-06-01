@@ -1,7 +1,110 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useScroll, useTransform, useVelocity, useSpring, AnimatePresence } from 'framer-motion';
 import { Instagram, Facebook, Mail, MapPin, Phone } from 'lucide-react';
+
+const FadeImage = ({ src, className, alt = "" }: any) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current?.complete) {
+      setIsLoaded(true);
+    }
+  }, [src]);
+
+  return (
+    <motion.img
+      ref={imgRef}
+      src={src}
+      alt={alt}
+      className={className}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isLoaded ? 1 : 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      onLoad={() => setIsLoaded(true)}
+      loading="lazy"
+      decoding="async"
+    />
+  );
+};
+
+const Preloader = ({ onComplete }: { onComplete: () => void }) => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    // Preload critical images while loader runs
+    const criticalImages = [
+      '/h1.webp', '/h2.webp', '/h3.webp', '/h4.webp', '/h5.webp',
+      '/01.webp', '/p1.webp'
+    ];
+    
+    let loadedCount = 0;
+    
+    criticalImages.forEach(src => {
+      const img = new Image();
+      img.onload = () => {
+        loadedCount++;
+      };
+      img.src = src;
+    });
+
+    // Simulate loading progress
+    const interval = setInterval(() => {
+      setProgress(p => {
+        if (p >= 100) {
+          clearInterval(interval);
+          setTimeout(onComplete, 600); // Give a little buffer for full transition
+          return 100;
+        }
+        // Speed up if critical images are loaded
+        const increment = loadedCount === criticalImages.length ? 15 : (Math.floor(Math.random() * 5) + 2);
+        return p + increment;
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [onComplete]);
+
+  return (
+    <motion.div 
+      initial={{ y: 0 }}
+      exit={{ y: "-100%", opacity: 0, transition: { duration: 0.9, ease: [0.76, 0, 0.24, 1] } }}
+      className="fixed inset-0 z-[200] bg-[#0C0C0C] flex flex-col items-center justify-center px-4"
+    >
+      <div className="overflow-hidden mb-8">
+        <motion.h1 
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="hero-heading font-black uppercase tracking-tight text-white text-5xl sm:text-6xl md:text-8xl text-center"
+        >
+          Studio Darpan
+        </motion.h1>
+      </div>
+      
+      <div className="w-full max-w-[200px] sm:max-w-xs h-[1px] bg-white/10 overflow-hidden relative">
+        <motion.div 
+          className="absolute top-0 left-0 bottom-0 bg-white"
+          initial={{ width: "0%" }}
+          animate={{ width: `${Math.min(progress, 100)}%` }}
+          transition={{ duration: 0.1 }}
+        />
+      </div>
+      
+      <div className="mt-4 overflow-hidden">
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="text-[#D7E2EA]/40 text-[10px] sm:text-xs uppercase tracking-[0.3em] font-medium"
+        >
+          {Math.min(progress, 100) < 100 ? `Loading ${Math.min(progress, 100)}%` : 'Welcome'}
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
 const ContactModalButton = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -261,7 +364,7 @@ const MarqueeSection = () => {
         style={{ x: move1, skewX }}
       >
         {row1Images.map((src, i) => (
-          <img key={`r1-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" loading="lazy" decoding="async" alt="" />
+          <FadeImage key={`r1-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" alt="" />
         ))}
       </motion.div>
       <motion.div 
@@ -269,7 +372,7 @@ const MarqueeSection = () => {
         style={{ x: move2, skewX }}
       >
         {row2Images.map((src, i) => (
-          <img key={`r2-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" loading="lazy" decoding="async" alt="" />
+          <FadeImage key={`r2-${i}`} src={src} className="w-[200px] h-[130px] sm:w-[320px] sm:h-[210px] md:w-[420px] md:h-[270px] rounded-xl sm:rounded-2xl object-cover shrink-0" alt="" />
         ))}
       </motion.div>
     </section>
@@ -414,11 +517,9 @@ const JourneySection = () => {
                   <FadeIn delay={0.2} y={40} scale={0.95}>
                     <div className="relative rounded-[30px] sm:rounded-[40px] overflow-hidden group shadow-2xl shadow-black/50 border border-[#D7E2EA]/10">
                       <div className="absolute inset-0 bg-[#0C0C0C]/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
-                      <img 
+                      <FadeImage 
                         src={step.img} 
                         alt={step.title} 
-                        loading="lazy"
-                        decoding="async"
                         className="w-full h-[300px] sm:h-[400px] object-cover transition-transform duration-1000 group-hover:scale-105"
                       />
                     </div>
@@ -475,11 +576,11 @@ const ProjectCard = ({ proj, index, totalCards }: any) => {
 
         <div className="flex flex-col md:flex-row gap-3 md:gap-4 h-full overflow-hidden pb-1 md:pb-2">
           <div className="w-full md:w-[40%] flex flex-row md:flex-col gap-3 md:gap-4 h-[30%] min-h-[100px] sm:min-h-[140px] md:h-auto md:min-h-0">
-            <img src={proj.images[0]} alt="" loading="lazy" decoding="async" className="w-1/2 md:w-full h-full md:h-[clamp(130px,16vw,230px)] object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
-            <img src={proj.images[1]} alt="" loading="lazy" decoding="async" className="w-1/2 md:w-full h-full md:flex-1 object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
+            <FadeImage src={proj.images[0]} alt="" className="w-1/2 md:w-full h-full md:h-[clamp(130px,16vw,230px)] object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
+            <FadeImage src={proj.images[1]} alt="" className="w-1/2 md:w-full h-full md:flex-1 object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
           </div>
           <div className="w-full md:w-[60%] flex-1 md:h-full min-h-[200px] md:min-h-0">
-            <img src={proj.images[2]} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
+            <FadeImage src={proj.images[2]} alt="" className="w-full h-full object-cover rounded-[20px] sm:rounded-[30px] md:rounded-[40px]" />
           </div>
         </div>
       </motion.div>
@@ -592,8 +693,13 @@ const FooterSection = () => {
 };
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <div className="bg-[#0C0C0C] min-h-screen text-white w-full overflow-hidden font-sans">
+      <AnimatePresence>
+        {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+      </AnimatePresence>
       <HeroSection />
       <MarqueeSection />
       <AboutSection />
