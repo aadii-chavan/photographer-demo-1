@@ -494,31 +494,31 @@ const ProjectsSection = () => {
     {
       num: "01",
       category: "Wedding",
-      name: "The Deshmukh Vivah",
+      name: "Weddings & Ceremonies",
       images: [
-        "https://image.pollinations.ai/prompt/cinematic_indian_wedding_couple_in_mandap_high_quality_photography?width=1280&height=850&nologo=true",
-        "https://image.pollinations.ai/prompt/beautiful_maharashtrian_bride_portrait_high_end_photography?width=1280&height=850&nologo=true",
-        "https://image.pollinations.ai/prompt/traditional_indian_wedding_rituals_close_up_photography?width=1280&height=850&nologo=true"
+        "/p1.jpg",
+        "/p2.jpg",
+        "/p3.jpg"
       ]
     },
     {
       num: "02",
       category: "Pre-Wedding",
-      name: "Sahil & Anjali in Pune",
+      name: "Couples & Pre-Weddings",
       images: [
-        "https://image.pollinations.ai/prompt/romantic_indian_couple_pre_wedding_shoot_in_nature_sunset?width=1280&height=850&nologo=true",
-        "https://image.pollinations.ai/prompt/candid_couple_laughing_outdoor_photography_india?width=1280&height=850&nologo=true",
-        "https://image.pollinations.ai/prompt/beautiful_landscape_pune_with_couple_silhouette_romantic?width=1280&height=850&nologo=true"
+        "/s1.jpg",
+        "/s2.jpg",
+        "/s3.jpg"
       ]
     },
     {
       num: "03",
       category: "Editorial",
-      name: "The Paithani Elegance",
+      name: "Editorial & Fashion",
       images: [
-        "https://image.pollinations.ai/prompt/high_fashion_editorial_photography_indian_woman_in_saree?width=1280&height=850&nologo=true",
-        "https://image.pollinations.ai/prompt/luxury_indian_bridal_jewelry_fashion_shoot?width=1280&height=850&nologo=true",
-        "https://image.pollinations.ai/prompt/elegant_maharashtrian_nauvari_saree_fashion_model_studio?width=1280&height=850&nologo=true"
+        "/e1.jpg",
+        "/e2.jpg",
+        "/e3.jpg"
       ]
     }
   ];
